@@ -14,7 +14,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-       'NAME': os.path.join(PROJECT_DIR, 'sqlite.db'),  # Or path to database file if using sqlite3.
+        'NAME': os.path.join(PROJECT_DIR, 'sqlite_old.db'),  # Or path to database file if using sqlite3.
     }
 }
 
@@ -250,9 +250,9 @@ if 'OPENSHIFT_DATA_DIR' in os.environ:
         DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.mysql',
-                'NAME': 'ssc',
-                'USER': 'adminUQte5iE',
-                'PASSWORD': 'jCfBRsAW2nre',
+                'NAME': 'simplenote',
+                'USER': 'adminP9Dd99m',
+                'PASSWORD': 'SksnIeCAbpB2',
                 'HOST': os.environ.get('OPENSHIFT_MYSQL_DB_HOST'),
                 'PORT': os.environ.get('OPENSHIFT_MYSQL_DB_PORT'),
                 'CONN_MAX_AGE': 600,
