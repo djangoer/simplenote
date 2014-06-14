@@ -1,3 +1,16 @@
+Repo settings
+=============
+
++ 539ba4b35004461920000107@simplenote-suhailvs.rhcloud.com
++ openshift id: suhailvs@gmail.com
+
+wsgi.py
+-------
+
++ os.environ['DJANGO_SETTINGS_MODULE'] = 'notes.settings'
++ sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'],'simplenotesite'))
+
+
 URL Saving
 ==========
 
