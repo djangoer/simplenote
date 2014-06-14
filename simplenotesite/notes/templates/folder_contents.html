@@ -1,0 +1,59 @@
+{% load note_extras %}
+{% load humanize %} 
+
+<style type="text/css">.trashlabel {position: relative;left: -12px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
+.trashbutton {padding-top: 0;padding-bottom: 0;}
+</style>
+{% if not cfolder in mainfolders %}
+<a class="btn trashbutton btn-danger pull-right" href="{% url 'delete_folder' %}?fname={{ cfolder }}">
+  <span class="trashlabel">
+    <i class="glyphicon glyphicon-trash"></i>
+  </span>Delete Folder</a>
+{% endif %}
+  {% if notes %}
+		<div class="lead" id="curfolder" style="border-bottom:4px solid #ccc;padding-bottom:10px;"> showing notes in <!--<span class="glyphicon glyphicon-folder-open"></span> --> 
+		<span class="text-warning"><strong>"{{cfolder}}"</strong></span> folder. {% if tag and notes %}<!--<span class="glyphicon glyphicon-tag"></span>-->filted by tag {% for tg in tag %}
+		<!--<span class="text-info">--><span class="label label-info">{{ tg.name }}</span> {% endfor %} <br />
+		<span class="btn btn-warning tagbtn" data-url="/ajx/?curfolder={{ cfolder }}">show all tags</span>{% endif %} </div>
+      
+    {% for note in notes %}
+    <div class="preview" id="n{{ note.pk }}">
+      <p class="text-muted text-right"><span class="glyphicon glyphicon-calendar"></span> {{note.created|naturaltime}}</p>
+      <p class="lead">{{ note.title }}</p>
+      <p class="description">{{ note.note|markdown_to_plaintext }}</p>
+      <div class="contents">
+      {{ note.note|markdown }}
+      </div>          
+      <div>{% for tag in note.tags.all %}<!--<a href="?tags={{ tag.pk }}&curfolder={{ cfolder }}">--> 
+      		<span class="label label-info tagbtn" data-url="/ajx/?tags={{ tag.pk }}&curfolder={{ cfolder }}">{{ tag.name }}</span>{% endfor %}
+      </div>
+		  <div class="post-menu">
+  			<a href="{% url 'add_note' note.id %}">
+  				<span class="glyphicon glyphicon-edit"></span> edit</a><span class="lsep">|</span>
+  			<!--<a href="#"> share</a><span class="lsep">|</span>-->
+  			<a id="delNote" href='#' data-noteid="{{ note.pk }}">
+  				<span class="glyphicon glyphicon-trash"></span> delete</a>
+		  </div>          
+    </div>
+    {% endfor %}
+  {% else %}
+    <blockquote>There is no Notes under this folder...<a href="{% url 'add_note' 'new' %}">Create new note</a></blockquote>
+  {% endif %}
+ 
+  <ul class="pagination">
+  <!-- $('#curfolder').text()-->
+    {% if notes.has_previous %}
+    <li><a href="?page={{ notes.previous_page_number }}&curfolder={{cfolder}}">
+    &laquo;</a></li>
+    {% endif %}
+    <li class="active"><a>Page {{ notes.number }} of {{ notes.paginator.num_pages }}<span class="sr-only">(current)</span></a></li>
+    {% if notes.has_next %}
+    <li><a href="?page={{ notes.next_page_number }}&curfolder={{cfolder}}">»</a>
+    </li>
+    {% endif %}    
+</ul> 
+</div>
+
+<script>
+$('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+</script>

@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block csslinks %}
+
+<link rel="stylesheet" href="{{ STATIC_URL }}flexslider/flexslider.css">
+<style type="text/css">
+#login{background:#F7F7F7;}
+#about{background: #EEBE24; font-size: 20px;}
+span.iconBig {
+    font-size: 5.2em;
+    color:#EEBE24;
+    padding-top:15px;
+}
+.slice{padding-top:50px;}
+</style>
+{% endblock %}
+
+{% block content %}				
+<!-- content -->
+<section id="home" data-stellar-background-ratio="0.5">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="flexslider" id="flexHome">
+					<ul class="slides">
+						<li>
+							<h1>Fast:</h1>
+							<h2>simplenote.in is built for speed and performance. You can take notes Quickly.</h2>
+						</li>
+						<li>
+							<h1>Easy</h1>
+							<h2>SimpleNote.in offer amazing and cool features which makes it powerful, simple to use and reliable.</h2>
+						</li>
+						<li>
+							<h1>Share</h1>
+							<h2>You can share your notes by just save it as public tag.</h2>
+						</li>
+					</ul>
+				</div> 
+			</div>
+			
+		</div>
+	</div>
+</section>
+<!-- call to action -->
+
+
+<section class="slice" id="about">
+	<div class="container">		
+		<h1>Introduction</h1>
+		<div class="row">			
+			<div class="col-sm-8">				
+				<blockquote><strong>simplenote.in</strong> is a web-based application for taking both private note and public notes. perfect for simple and clean presentation of your ideas.</blockquote>
+			</div>			
+		</div>
+	</div>
+</section>
+
+<section class="slice" id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="lead">In today's electronic world, it can be quite a challenge to organize all useful information such as web clips, articles, bits of text, images, interesting web links, bookmarks, shopping lists, to-do lists, recipes, tips, passwords, secretkeys, contact list, everyday task, ideas and many others that are hanging around US. Simplenote is an excellent solution to manage these snippets of information.</p>
+                 <h1>Our services</h1>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row boxFeature">
+                    <div class="col-xs-3">	<span class="glyphicon glyphicon-search iconBig"></span>
+                    </div>
+                    <div class="col-xs-9">
+                        <h2>Create Private Notes</h2>
+                        <p>You can create Private notes so that only the creator can view the notes.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row boxFeature">
+                    <div class="col-xs-3">	<span class="glyphicon glyphicon-tags iconBig"></span>
+                    </div>
+                    <div class="col-xs-9">
+                        <h2>Tagging for Notes</h2>
+                        <p>Elegant Tagging that help you organize your notes in the best way</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row boxFeature">
+                    <div class="col-xs-3">	<span class="glyphicon glyphicon-folder-open iconBig"></span>
+                    </div>
+                    <div class="col-xs-9">
+                        <h2>Organize Similar note</h2>
+                        <p>You can organize similar private notes in Folders. So that you can access it easily later</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row boxFeature">
+                    <div class="col-xs-3">	<span class="glyphicon glyphicon-th iconBig"></span>
+                    </div>
+                    <div class="col-xs-9">
+                        <h2>Share Notes</h2>
+                        <p>Share your notes to others by simply saving it in Public Folder</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="slice" id="login">
+    <div class="container">
+        <h1 style="border-bottom:1px solid #ccc;">Log in with SocialAccounts</h1>
+        <div class="row">
+            <div class="col-xs-8">                
+                <p class="lead" style="padding:20px;">Tired of creating another user name and password on every web site? Use your existing Twitter, Facebook, Google, Yahoo, GitHub, or LinkedIn to log in. Or create a traditional username and password, too.</p>
+            </div>
+            <div class="col-sm-4">
+                <div class="row boxFeature">
+                    <a href="{% url 'auth_login' %}"><img src="{{ STATIC_URL }}img/loginpic2.jpg" alt="Simple note Login" class="img-thumbnail"/></a>
+                </div>
+            </div> 
+        </div>
+              
+    </div>
+</section>
+
+{% endblock %}
+{% block javascripts %}
+<script src="{{ STATIC_URL }}flexslider/jquery.flexslider-min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {   
+	if($('#flexHome').length){
+        $('#flexHome').flexslider({
+            animation: "slide",
+            controlNav:true,
+            directionNav:false, 
+            touch: true,
+            direction: "vertical"      
+        });    
+    }
+});
+</script>
+{% endblock %} 

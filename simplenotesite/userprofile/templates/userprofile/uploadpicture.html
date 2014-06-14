@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block csslinks %}
+<link rel="stylesheet" href="{{ STATIC_URL }}jcrop/jquery.Jcrop.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<h4>Upload Profile Picture</h4>	      
+    <form enctype="multipart/form-data" action="#" onsubmit="return validateForm()" method="POST">{% csrf_token %}   
+	    Profile Pic: {{ pf.avatar }} <hr>
+	    <div id="previewimage"></div>
+	    {% if pf.errors %}
+			<span style="color:red;">{{ pf.errors }}</span>
+		{% endif %}         
+        <a href="{% url 'user_profile' %}" class="btn btn-default">Cancel</a>
+        <button type="submit" class="btn btn-primary">Upload Picture</button>        
+        <input id="cropcoords" type="hidden" name="cropcoords" value="">
+    </form>
+</div><!-- /.container -->
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ STATIC_URL }}jcrop/jquery.Jcrop.min.js"></script>
+<script type="text/javascript">	
+	function showCoords(c){
+		//var str_vals='x:'+c.x+',y:'+c.y;
+		//str_vals+=',x2:'+c.x2+',y2:'+c.y2;
+		//str_vals+=',w:'+c.w+',h:'+c.h;		
+        var csv_vals=c.x+','+c.y+','+c.x2+','+c.y2;
+		$("#cropcoords").val(csv_vals);
+	};
+  	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();            
+            reader.onload = function (e) {
+            	var img_preview='<img id="blah" src="'+e.target.result+'" alt="Preview" />';
+                //$('#blah').attr('src', e.target.result);
+                $('#previewimage').html(img_preview);
+                $('#blah').Jcrop({                	
+					onSelect: showCoords,
+                	aspectRatio: 1
+                });
+            }            
+            reader.readAsDataURL(input.files[0]);
+        }
+  	}    
+    $("#id_avatar").change(function(){
+        readURL(this);
+    });
+    function validateForm()
+    {
+        var x=$("#id_avatar").val();
+        var cord=$("#cropcoords").val();
+        if (x==null || x==""){
+          alert("Please select an image to upload.");
+          return false;
+        }else if (cord==null || cord==""){
+          alert("Please select the coordinates to crop the image.");
+          return false;
+        }
+    }
+</script>
+{% endblock %}

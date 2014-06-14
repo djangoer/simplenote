@@ -1,0 +1,110 @@
+{% url 'public_home' as notes %}
+{% url 'user_list' as users %}
+{% url 'home' as mynotes %}
+{% url 'add_note' 'new' as addnote %}
+{% url 'user_profile' as settings %}
+{% url 'auth_login' as login %}
+{% url 'registration_register' as signup %}
+{% url 'tags' as urltags %}
+{% load note_extras %}
+<header id="mainHeader" class="navbar-fixed-top" role="banner">
+  <div class="container">
+    <nav class="navbar navbar-default scrollMenu" role="navigation">
+      <div class="navbar-header">
+        <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> <span class="sr-only">Toggle navigation</span> <a class='btn btn-primary'><span id="hideexpandnavbar" class="glyphicon glyphicon-hand-down"> Expand</span></a> </button>-->
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{% url 'documentation' %}"><img src="{{ STATIC_URL }}img/main-logo.png" alt="Simple note logo"/></a> 
+       <!-- <a class="navbar-brand" href="{% url 'home' %}"><i class="glyphicon glyphicon-home"></i> Home</a>-->
+      </div>
+      <div class="collapse navbar-collapse navbar-ex1-collapse" id="scrollTarget">
+        <div class="navbar-right">
+
+        <ul class="nav navbar-nav navbar-left">        
+        <li{% if request.path == notes %} class="active"{% endif %}>
+            <a href="{{notes}}"><i class="glyphicon glyphicon-th"></i> Notes</a>
+        </li>        
+        <li{% if request.path == users %} class="active"{% endif %}>
+            <a href="{{users}}"><i class="glyphicon glyphicon-user"></i> Users</a> 
+        </li>
+
+        {% if request.user.is_active %}
+        <li{% if request.path == mynotes %} class="active"{% endif %}>
+            <a href="{{mynotes}}"><i class="glyphicon glyphicon-list-alt"></i> My Notes</a> 
+        </li>
+        <li class="dropdown alerts-dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="glyphicon glyphicon-tag"></i> Tags <b class="caret"></b></a>
+          <ul class="dropdown-menu" style="max-height:200px;overflow:auto;position:absolute">
+              <li><a href="{{urltags}}">All Tags</a></li>
+              <li class="divider"></li>                        
+              {% create_tagmenu request.user.pk %}
+          </ul>
+        </li>
+        <!--<li{% if request.path == urltags %} class="active"{% endif %}>
+            <a href="{{urltags}}"><i class="glyphicon glyphicon-tag"></i> Tags</a>
+            </li>-->
+        <li{% if request.path == addnote %} class="active"{% endif %}>
+            <a href="{% url 'add_note' 'new' %}"><i class="glyphicon glyphicon-edit "></i> Add Note</a>
+        </li>
+        <!--
+        <li>
+            <a href="{% url 'auth_logout' %}"><i class="glyphicon glyphicon-off"></i> Logout</a>
+        </li>
+        -->
+        {% else %}
+        <li{% if request.path == login %} class="active"{% endif %}>
+            <a href="{{login}}"><i class="glyphicon glyphicon-log-in"></i> Login</a>
+        </li>
+
+        <li{% if request.path == signup %} class="active"{% endif %}>
+            <a href="{{login}}{#{{signup}}#}"><i class="glyphicon glyphicon-plus-sign"></i> Sign Up</a> 
+        </li>
+        {% endif %}            
+        </ul>
+
+        {% if request.user.is_active %}
+        <ul class="nav navbar-nav navbar-right">            
+        <!--</ul>
+        <ul class="nav navbar-nav navbar-left">-->
+            <li class="dropdown"> <a href="#" class="dropdown-toggle dropdown-avatar" data-toggle="dropdown">
+              <span>
+                <img class="menu-avatar" src="{{ user|getthumbnail:'48' }}" align="middle" /> <span style="display:block;">{{ user.username }} <i class="icon-caret-down"></i></span>
+                <!--<span class="badge badge-dark-red">5</span>-->
+              </span>
+              </a>
+
+                <ul class="dropdown-menu">
+                    <!-- the first element is the one with the big avatar, add a with-image class to it -->
+                    <li class="with-image">
+                        <div class="avatar">
+                            <img src="{{ user|getthumbnail:'48' }}" />
+                        </div> <span>{{ user.username }}</span>
+
+                    </li>
+                    <li class="divider"></li>                    
+                    <li><a href="{{ settings }}"><i class="glyphicon glyphicon-wrench icon-dropdown"></i> <span>My Profile</span></a>
+
+                    </li>
+                    <!--<li><a href="#"><i class="glyphicon glyphicon-envelope icon-dropdown"></i> <span>Messages</span> <span class="badge badge-dark-red pull-right">5</span></a>
+                    </li>-->
+                    <li><a href="{% url 'profile_update' %}"><i class="glyphicon glyphicon-edit icon-dropdown"></i> <span>Update Profile</span></a>
+                    </li>
+
+                    <li><a href="{% url 'auth_logout' %}?next=/doc/"><i class="glyphicon glyphicon-off icon-dropdown"></i> <span>Logout</span></a>
+
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        {% endif %}
+    </div>
+      </div>
+    </nav>
+  </div>
+</header>

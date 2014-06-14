@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load note_extras %}
+{% block csslinks %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+	  <div class="col-lg-6">
+	  	{% if messages %}
+	  	<style type="text/css">
+	  		.text-error:hover {color: #953b39;}
+	  		.text-error {color: #b94a48;}</style>
+		<ul class="messages">
+		    {% for message in messages %}
+		    <li{% if message.tags %} class="text-{{ message.tags }}"{% endif %}>{{ message }}</li>
+		    {% endfor %}
+		</ul>
+
+		{% endif %}
+		<form method="POST" action="">{% csrf_token %}
+			<div class="input-group">
+		        <span class="input-group-addon"><span class="glyphicon glyphicon-tag"></span></span>
+		        <input type="text" name="name" class="form-control" id="name" placeholder="Enter Tag Name" required>
+		        <span class="input-group-btn">
+			        <button type="submit" class="btn btn-success">Add New Tag</button>
+			    </span>
+		    </div>
+		</form>
+	  </div>
+	</div><!--row-->
+	<hr  style="padding-top:30px;">
+	<p class="lead">Tags: </p>	 	
+ 	{% create_taglist request.user.pk 'y' %}	
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

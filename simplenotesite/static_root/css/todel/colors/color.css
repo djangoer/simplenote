@@ -1,0 +1,240 @@
+/** tabs **/
+.panel-default>.panel-heading {background:#EEBE24; }
+.panel-default>.panel-heading:hover {background:#fff; }
+.panel-default>.panel-heading:hover a {color:#EEBE24; }
+.panel-title>a {color:#fff;}
+.panel-title>a:hover {text-decoration: none;}
+
+/* END BOOSTRAP CUSTOMIZATION
+================================================== */
+
+/* TYPOGRAPHY
+================================================== */
+
+body {
+	color:#777;
+	background: #fff;
+}
+
+blockquote small {
+	color:inherit;
+}
+h1, h2, h3, h4, h5, h6 {
+	color:#222;
+}
+h2 {
+ color:#888;	
+}
+h2 i {color:#999}
+h2.subTitle:after, h1.noSubtitle:after{
+	background-color:#EEBE24;
+}
+
+/* LINKS AND BUTTONS
+================================================== */
+
+a {
+	color:#EEBE24;
+}
+a:hover, .scrollspyNav .active a {
+	color:#EEBE24;
+}
+ul.iconsList li a {
+	color:#555
+}
+ul.iconsList li a:hover, ul.iconsList i {
+	color:#EEBE24
+}
+
+
+
+
+/* MAIN MENU 
+================================================== */
+
+#mainHeader{
+    background-color: white;
+	-webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 1px 10px rgba(0,0,0,.1);
+	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+}
+
+#mainHeader .navbar-inner {
+	background: #444;
+	filter:none !important;
+}
+#mainMenu ul li a, #resMainMenu ul li a {
+	color:#444;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+	background: #EEBE24;
+	color:#fff;
+}
+
+/* END MAIN MENU 
+================================================== */
+
+/* BTN LARGE by suhail*/
+
+.btn-lrg {
+	text-transform:uppercase;
+	padding:15px 20px;
+	font-size:18px;
+	 -webkit-transition: all 0.2s ease-out;
+	-moz-transition: all 0.2s ease-out;
+	-o-transition: all 0.2s ease-out;
+	-ms-transition: all 0.2s ease-out;
+	transition: all 0.2s ease-out;
+	padding:18px 23px;
+	font-size:22px;
+	background:#EEBE24;
+	color:#fff;
+	border:2px solid #fff;
+}
+.btn-lrg:hover {
+	color:#EEBE24;
+	border-color:#eee;
+	text-shadow:none;
+	background:#fff
+}
+
+
+/* HOME
+================================================== */
+
+#home h1 {color:#FFFFFF;}
+
+/* SLIDERS
+================================================== */
+
+/*** FLEX ***/
+
+.flexslider {
+	box-shadow:none;
+}
+.slides .txt div {
+	background:#444;
+	color:#FFFFFF;
+}
+.flexslider .flex-direction-nav a {
+	background-color:#EEBE24;
+}
+
+.flexslider .flex-control-paging li a:hover, #sliderWrapper .flex-control-paging li a.flex-active{
+	background: #fff;
+	border:2px solid #fff;
+}
+.flexslider .flex-control-paging li a {
+	background: transparent;
+	border:2px solid rgba(255,255,255,0.5);
+}
+.flexslider .flex-control-nav {
+	background:transparent;
+}
+.flexslider h1 {
+	color:#fff;
+	background-color:#EEBE24;
+}
+.flexslider h2 {
+	color:#fff;
+	background-color:#333;
+}
+.flexslider .caption p {
+	background-color:#fff;
+	color:#555
+}
+
+/*** flexHome ***/
+#flexHome  h1 {	color:#fff;
+	background:none;
+	}
+#flexHome  h2 {	color:#fff;
+	background:none;
+}
+
+/*** END FLEX SLIDER ***/
+
+/* END SLIDERS
+================================================== */
+
+/* PORTFOLIO
+================================================== */
+
+nav#filter a {
+	background-color: #EEE;
+	color:#555;
+}
+nav#filter a:hover, nav#filter a.current {
+	background-color: #EEBE24;
+	color:#fff;
+}
+li.filterTitle {
+	color:#4F6266;
+}
+section#projectDescription {
+	background-color:#F8F8F8
+}
+.mask{background-color: #EEBE24;}
+/* END PORTFOLIO
+================================================== */
+
+/* MISCELANIOUS
+================================================== */
+/*** hover images ***/
+.iconLinks a span {color:#fff;}
+
+#projectQuote, #projectQuote h3{background:#ddd;color:#444;}
+
+/* END MISCELANIOUS
+================================================== */
+
+/* NEKO CSS FRAMEWORK
+================================================== */
+
+/*** Feature box **/
+
+.boxFeature i{color:#EEBE24;} 
+
+/*** slices ***/
+.slice{
+	background-color:#fff;
+}
+
+/*** call to action ***/
+.ctaBox {border:2px solid rgba(0,0,0,0.05);}
+.ctaBoxFullwidth{border:none}
+
+.ctaBox blockquote {
+	color:#fff;
+}
+
+/*color1*/
+.color1, .slice.color1, .bulle.color1, .ctaBox.color1{
+	background-color:#F7F7F7;
+	color:#444;
+}
+
+.color1 h1, .color1 h2, .color1 h3, .color1 h4, .color1 blockquote, .color1 a{
+	color:#444;
+}
+.color1 a.btn{color:#fff;}
+.color1 a.btn:hover{color:#EEBE24;}
+
+/*color4*/
+.color4, .slice.color4, .bulle.color4, .ctaBox.color4{
+	background-color:#EEBE24;
+	color:#fff;
+}
+
+.color4 h1, .color4 h2, .color4 h3, .color4 h4, .color4 blockquote, .color4 a {
+	color:#fff;
+}
+
+/*** icons ***/
+.iconRounded {border:2px solid #EEBE24;color:#EEBE24;background-color:#fff;}
+.iconRounded:hover, .color1 .iconRounded:hover{background-color:#EEBE24;color:#fff;}
+.color1 .iconRounded {color:#EEBE24;}
+.color4 .iconRounded {background-color:#FFF;color:#EEBE24;}
+
+/* END NEKO CSS FRAMEWORK
+================================================== */

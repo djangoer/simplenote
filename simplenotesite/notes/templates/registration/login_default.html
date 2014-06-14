@@ -1,0 +1,84 @@
+{% extends "registration/registration_base.html" %}
+{% block title %}Login{% endblock %}
+{% block csslinks %}
+<style type="text/css">
+
+body{
+	/*background: #ccc;ff99;*/
+}
+label{
+	padding-bottom: 0;
+	padding-top: 10px;
+	color: #727272;
+}
+  
+  
+.form-signin {	
+	padding: 10px 15px 5px;
+	background: #f1f1f1;
+	border: 1px solid #e5e5e5;
+}
+
+/*.form-signin {
+  max-width: 330px;
+  padding: 25px;
+  margin: 0 auto;
+   
+}*/
+.form-signin-heading{
+	/*margin-bottom: 20px;*/
+	border-bottom: 1px solid #e5e5e5;
+}
+
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+<div class="row">
+	<div class="col-md-8">
+	<p class="lead" style="padding-top:20px;border-bottom:1px solid #ccc;">Login using Socialaccount:</p>
+			<p>
+			<a href="{% url 'socialauth_begin' %}twitter/"><img src="{{ STATIC_URL }}img/twitter-icon32.png" /></a> | 
+			<a href="{% url 'socialauth_begin' %}yahoo/"><img src="{{ STATIC_URL }}img/yahoo-icon32.png" /></a> | 
+			<a href="{% url 'socialauth_begin' %}linkedin/"><img src="{{ STATIC_URL }}img/linkedin-icon32.png" /></a> |
+			<a href="{% url 'socialauth_begin' %}facebook/"><img src="{{ STATIC_URL }}img/facebook-icon32.png" /></a>
+			<!--
+			    Google |
+			    <a href="/socialauth/login/linkedin/">Linkedin</a>
+			|    <a href="/socialauth/login/live/">MSN Live</a>
+			 |   <a href="/socialauth/login/github/">Github</a>
+			  |  <a href="/socialauth/login/facebook/">Facebook</a>     
+			   | <a href="/socialauth/login/yahoo/">Yahoo</a>-->
+			</p>
+			<h5>Need a Flicknote account?</h5>
+			<a href="{% url 'registration_register' %}" class="btn btn-success">Sign Up</a><br><br>
+			<a class="btn btn-default" href="{% url 'public_home' %}">Back to Public Notes</a>
+	</div>
+	<div class="col-md-4">
+		<form class="form-signin" method="post" action="{% url 'auth_login' %}">{% csrf_token %}
+		  	<h2 class="form-signin-heading">Login</h2>
+		  	{% if form.errors %}
+		  	<div class="errors"> 
+				<p>Your username and password didn't match.<br>Please try again.</p>
+			</div>
+			{% endif %}
+			<label>Username:</label>	    
+		    <input type="text" class="form-control" id="username" name="username" placeholder="UserName" autofocus>
+
+		    <label>Password:</label>
+		    <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+		    <p><a href="{% url 'auth_password_reset' %}">Forgot</a> your password?</p>
+		    <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
+			<input type="hidden" name="next" value="{{ next }}" />	
+					
+		</form>	 
+			
+	</div>
+</div>
+  	
+</div> <!-- /container -->
+{% endblock %}

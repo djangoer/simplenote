@@ -1,0 +1,140 @@
+{% extends "public/public_base.html" %}
+{% load note_extras %}
+{% block title %}Public Notes{% endblock %}
+{% block csslinks %}
+<style type="text/css">
+a:link {
+    text-decoration:none;
+}
+.title a{
+    padding-left: 5px;
+    font-family:Verdana;
+    font-size: 12pt;
+    color:#000000;
+}
+
+.serialnumber{
+	font-size: 10pt;
+    color:#5d5d5d;
+    vertical-align: top;
+}
+.subtext {
+    font-family:Verdana;
+    font-size: 9pt;
+    color:#828282;
+}
+.subtext a:link, .subtext a:visited {
+    color:#828282;
+}
+.subtext a:hover, .title a:hover {
+    text-decoration:underline;
+}
+
+
+.imageWrapper {
+    position: relative;
+    width: 160px;
+    height: 160px;
+}
+.imageWrapper img {
+    display: block;
+}
+.imageWrapper .cornerLink {
+    opacity: 0;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 2px 0px;
+    color: #ffffff;
+    background: #000000;
+    text-decoration: none;
+    text-align: center;
+    -webkit-transition: opacity 500ms;
+    -moz-transition: opacity 500ms;
+    -o-transition: opacity 500ms;
+    transition: opacity 500ms;
+    
+}
+.imageWrapper:hover .cornerLink {
+    opacity: 0.8;
+}
+.userprofile .glyphicon {  margin-bottom: 10px;margin-right: 10px;}
+    
+span.loc {display: block;line-height: 1.43; color: #999;}
+.lbltag { font-size: .9em;}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container" style="padding:20px;">
+    <p class="lead"> Notes created by: {{ usr.username }}. </p><hr>
+    <div class="row">
+        <div class="col-md-3" style="border-right:1px solid #ccc;">          
+            <div class="imageWrapper thumbnail">
+                <img border="0" alt="Profile Pic" src="{{ usr|getthumbnail:160 }}" />
+                {% ifequal request.user usr %}
+                <a href="{% url 'upload_pic' %}" class="cornerLink">Change picture</a>
+                {% endifequal %}            
+            </div>       
+            <p class="lead">{{ usr.username|truncatechars:9 }}</p><hr>
+            {% ifequal request.user usr %}
+                <a href="{% url 'profile_update' %}" class="btn btn-success btn-xs">Update profile</a>
+            {% endifequal %}
+            <p>Real Name: <strong>{{ usr.first_name }}</strong><br /></p>
+            <p class="userprofile">   
+                <i class="glyphicon glyphicon-envelope"></i>{{usr.email}}<br />
+                <i class="glyphicon glyphicon-calendar"></i>Joined on <strong>{{ usr.date_joined|date:"d M Y" }}</strong><br />
+                {% if usr.profiledetails %}
+                {% with usr.profiledetails as prof %}                                     
+                    <i class="glyphicon glyphicon-globe"></i>Website: {{prof.website}} <br />
+                    <i class="glyphicon glyphicon-gift"></i>BirthDay:<strong>{{ prof.dob|date:"d M" }}</strong><br />
+                    <i class="glyphicon glyphicon-phone-alt"></i>{{ prof.phone }} 
+                {% endwith %}
+                {% endif %}
+            </p>
+            {% if usr.profiledetails %}
+            <span class="loc"><cite title="{{ prof.gmaplocation.address }}">{{ usr.profiledetails.location.address }}
+                    <i class="glyphicon glyphicon-map-marker"></i></cite><br />
+               Latitude:{{ usr.profiledetails.location.lat|floatformat:3 }}, Longitude:{{ usr.profiledetails.location.lng|floatformat:3 }}
+            </span>            
+            <div style="border:1px solid #000;padding:5px;">
+                <p><strong>About Me:</strong></p>
+                <p>{{ usr.profiledetails.summary }}</p>
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-md-6" style="border-right:1px solid #ccc;">
+            {% if tags %}
+            <div style="border-bottom:1px solid #ccc; padding-bottom: 5px;">filted by tag {% for tg in tags %}
+                <span class="label label-info">{{ tg.name }}</span> {% endfor %} | <a href="{% url 'user_notes' usr.pk %}" class="btn btn-warning" style="text-decoration:none;">show all tags</a> 
+            </div>
+            {% endif %}
+
+        	<table border=0 cellpadding=0 cellspacing=0>
+				{% for note in notes %}
+			    <tr>
+			        <td class="serialnumber"><strong>{{ forloop.counter0|add:notes.start_index }}. </strong></td>
+			        <td class="title"><a href="{% url 'public_note' note.pk %}{{note.title|slugify|truncatechars:60}}">{# {{note.note|truncatechars:150|markdown_to_plaintext}} #}{{ note.title }}</a>
+			        </td>
+			    </tr>    
+			    <tr class="subtext">
+			        <td colspan=1></td>
+			        <td>{% if not usr %}by <a href="{% url 'user_notes' note.user.pk %}">{{note.user.username}}</a> | {% endif %}created on {{note.created}} | tags: {% for tg in note.tags.all %}<a href="{% url 'user_notes' usr.pk %}?tags={{tg.pk}}" style="text-decoration:none;"><span class="label label-info lbltag">{{ tg.name }}</span></a> {% endfor %}</td>
+			    </tr>
+			    <tr style="height:5px"></tr>
+			    {% endfor %}
+			</table>
+            {% if notes.paginator.num_pages > 1 %}
+                {% include "includes/paginator.html" %}   
+            {% endif %}
+			
+        </div><!-- /.col-md-6 -->
+        <div class="col-md-3">
+        <p class="lead"> Tags used by {{usr.username}}</p><hr>
+        {% create_taglist usr.pk %}
+        </div>        
+    </div>
+    
+</div><!--container-->
+{% endblock %}

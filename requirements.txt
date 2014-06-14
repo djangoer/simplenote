@@ -1,0 +1,6 @@
+Django
+django-social-auth
+Pillow
+markdown
+django-registration
+django-crispy-forms

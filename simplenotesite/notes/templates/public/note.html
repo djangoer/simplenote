@@ -1,0 +1,82 @@
+{% extends "public/public_base.html" %}
+{% load note_extras %}
+{% block title %}{{note.title|slugify|truncatechars:60}} - {% endblock %}
+{% block metatitle %}"{{note.title}}"{% endblock %}
+{% block metadescription %}"{{note.note}}"{% endblock %}
+{% block metaurl %}"http://simplenote.in/note/{{note.pk}}/{{note.title|slugify|truncatechars:60}}"{% endblock %}
+
+{% block csslinks %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/markdownpreview.css">
+<!--highlightjs-->
+<link rel="stylesheet" href="{{ STATIC_URL }}highlightjs/themes/default.css">
+<!--
+please vist:http://jmblog.github.io/color-themes-for-highlightjs/
+================================================================
+
+0. tomorrow-night.css
+1. tomorrow-night-bright.css
+2. tomorrow-night-eighties.css
+3. tomorrow-night-blue.css
+4. tomorrow.css
+5. hemisu-light.css
+6. hemisu-dark.css
+-->
+{% endblock %}
+
+{% block content %}
+<div class="container" style="padding:5px;">
+
+<p class="text-muted text-right">{{note.created}} | by <a href="{% url 'user_notes' note.user.pk %}">{{ note.user.username|truncatechars:10 }}</a></p>
+<p class="lead">{{ note.title }}</p>
+	{{ note.note|markdown }}
+	<div>
+
+		{% for tag in note.tags.all %}
+		<a href="{% url 'public_home' %}?tags={{tag.pk}}">
+			<span class="label label-info" style="font-size:.9em; margin: 5px;">{{ tag.name }}</span>
+		</a>
+		{% endfor %}
+		{% ifequal request.user note.user %}
+		<style type="text/css">
+			.post-menu {padding-top: 10px;}
+			.post-menu>a{ padding: 4px 3px 2px 3px; color: #4a6b82; }
+			.post-menu>a:hover {color: #fff; background: #ff9900; text-decoration: none;}
+		</style>
+		<div class="post-menu">
+  			<a href="{% url 'add_note' note.id %}">
+  				<span class="glyphicon glyphicon-edit"></span> edit</a><span class="lsep">|</span>
+  			<!--<a href="#"> share</a><span class="lsep">|</span>-->
+  			<a id="delNote" href='#'>
+  				<span class="glyphicon glyphicon-trash"></span> delete</a>
+		 </div>    
+		{% endifequal %}
+    </div>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+<script type="text/javascript" src="{{ STATIC_URL }}highlightjs/highlight.pack.js"></script>
+
+<script>
+$( document ).ready(function() {	
+  $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+
+  $(document).on('click', '#delNote', function () {    
+    var nt=$(this).data('noteid');
+    var delurl="{% url 'delete_note' %}?delnote={{ note.pk }}";
+    var redirecturl="{% url 'user_notes' note.user.pk %}";
+    Alertify.dialog.confirm("Are you sure want to delete the note", function() {      
+      $.get(delurl).done(function(x){ 
+        if (x=='1'){
+          //Alertify.log.success("Note removed Successfully.");
+          document.location.href=redirecturl;          
+        }
+        else Alertify.log.error("Error: " + x);        
+      });  
+    });
+  });
+});
+</script>
+
+{% endblock %}

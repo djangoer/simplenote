@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>{% block title %}{% endblock %} Simple Note</title>
+    <meta name="domain" content="simplenote.in"/>
+    <meta name="title" content={% block metatitle %}"SimpleNote is a web-based application for taking both private note and public notes. perfect for simple and clean presentation of your business."{% endblock %} />
+    <meta name="description" content={% block metadescription %}"In today's electronic world, it can be quite a challenge to organize all useful information such as web clips, articles, bits of text, images, interesting web links, bookmarks, shopping lists, to-do lists, recipes, tips, passwords, secretkeys, contact list, everyday task, ideas and many others that are hanging around US. Flicknote is an excellent solution to manage these snippets of information."{% endblock %}/>
+     <meta name="url" content={% block metaurl %}"http://simplenote.in/"{% endblock %}/>
+   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"> 
+<!--<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">-->
+    <!--THEMES
+    {{ STATIC_URL }}css/bootstrap.css
+    bootstrap_default.min.css
+    bootstrap_cyborg.min.css
+    bootstrap_journal.min.css
+    bootstrap_readable.min.css
+    bootstrap_spacelab.min.css
+    bootstrap_simplex.min.css
+    bootstrap_ubuntu.min.css
+    bootstrap_flatty.min.css
+    -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/sticky-footer.css">
+    <!--<link rel="stylesheet" href="/static/bootswatch.min.css">-->
+
+    <!-- font update 
+    for more info please visit :
+    http://jsfiddle.net/suhailvs/raVQJ/3/
+    ******************************-->
+    <!--<link href='//fonts.googleapis.com/css?family=Roboto:100,300,500' rel='stylesheet' type='text/css'>-->
+    <style>
+    body{
+                /* 
+        font-family: 'Averia Sans Libre', cursive;
+        font-family: 'Raleway', sans-serif;
+        font-family: 'Source Code Pro', sans-serif;
+              
+        font-family: 'Roboto', sans-serif;    
+        letter-spacing:1.5px;
+        font-weight: 300; 
+   */
+        font-family:Arial,'Liberation Sans','DejaVu Sans',sans-serif;        
+        position: relative; 
+        padding-top: 70px;
+        
+    }
+    pre {background: none; border:none;}
+    @media (max-width: 350px) {
+        a.navbar-brand {display: none;}
+    }
+    </style>
+
+    {% if request.user.is_active %}
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/navdropdown.css">
+        
+        <!--alertify testings http://fabien-d.github.io/alertify.js/-->
+        <link rel="stylesheet" href="{{ STATIC_URL }}alertify/alertify.css">
+        <link rel="stylesheet" href="{{ STATIC_URL }}alertify/alertify.default.css">
+        <!-- end alertify also there is a js -->
+    {% endif %}
+    <!-- end of form update
+    ************************************-->
+
+    {% block csslinks %}
+    {% endblock %}
+    {% block css_registration %}
+    {% endblock %}
+    <!--<link rel="stylesheet" href="{{ STATIC_URL }}font-awesome/css/font-awesome.min.css">-->
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/theme/navbar.css">
+    <link type="text/css" id="colors" rel="stylesheet" href="{{ STATIC_URL }}css/theme/yellow.css">
+    <style> a{color:#3E6D92;} .navbar-nav li{border-left: 1px solid #e3ae57;} .navbar-brand{padding:0;}</style><!--#e3ae57,#EEBE24-->
+    <link rel="shortcut icon" href="{{ STATIC_URL }}img/notes.png">
+</head>
+<body>
+<!-- Wrap all page content here -->
+<div id="wrap">
+{% include "includes/navbar_user.html" %}
+
+{% block content %}
+{% endblock %}
+</div><!--wrap-->
+
+<div id="footer">
+  <div class="container">
+    <p class="text-muted credit">
+        Download Browser Extensions - 
+        <a href="{{ STATIC_URL }}downloads/easynotes_1.2.0.xpi">
+        <img src="{{ STATIC_URL }}img/compatible_firefox.gif" width="21" height="20" alt="Firefox" title="Firefox" /> </a>
+        <!--
+        <img src="{{ STATIC_URL }}img/compatible_ie.gif" width="20" height="20" alt="Internet Explorer" title="Internet Explorer" /> |
+        <a href="{{ STATIC_URL }}downloads/easynotes_1.2.0.xpi">
+        <img src="{{ STATIC_URL }}img/compatible_firefox.gif" width="21" height="20" alt="Firefox" title="Firefox" /> </a> | 
+        <a href="{{ STATIC_URL }}downloads/easynotes_1.2.0.oex">
+        <img src="{{ STATIC_URL }}img/compatible_opera.gif" width="18" height="20" alt="Opera" title="Opera" /></a> |
+        <a href="{{ STATIC_URL }}downloads/easynotes_1.2.0.crx">
+        <img src="{{ STATIC_URL }}img/compatible_chrome.gif" width="21" height="20" alt="Google Chrome" title="Google Chrome" /></a> |
+        <img src="{{ STATIC_URL }}img/compatible_safari.gif" width="18" height="20" alt="Safari" title="Safari" />--> |         
+        Created by <a href="http://www.capsone.com">Capsone</a>
+    </p>    
+  </div>
+</div>
+<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
+<script src="{{ STATIC_URL }}js/jquery.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+
+{% if request.user.is_active %}
+<script src="{{ STATIC_URL }}alertify/alertify.min.js"></script>
+<script type="text/javascript">
+{% if messages %}
+    {% for message in messages %}
+    //{% if message.tags %} {{ message.tags }} {% endif %}{{ message }}
+    Alertify.log.create("{{ message.tags }}", "{{ message }}");
+    {% endfor %}
+{% endif %} 
+</script>
+{% endif %} 
+
+{% block javascripts %}
+{% endblock %} 
+</body>
+</html>

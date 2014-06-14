@@ -1,0 +1,29 @@
+{% extends "public/public_base.html" %}
+{% block title %}Users{% endblock %}
+{% load note_extras %}
+{% block content %}
+<div class="container">
+
+  <div class="row">
+  {% for user in users %}
+  {% if forloop.counter0 != 0 and forloop.counter0|divisibleby:"4" %}
+  </div>
+  <div class="row">
+    {% endif %}
+    <div class="col-sm-3 col-md-3">          
+      <div class="row user-row" style="padding:5px;">
+        <div class="col-md-4">
+          <a href="{% url 'user_notes' user.pk %}" class="thumbnail">
+          <img class="img-rounded" src="{{ user|getthumbnail:'48' }}" alt="User Pic">
+          </a>
+        </div>
+        <div class="col-md-8">
+          <a href="{% url 'user_notes' user.pk %}"><strong>{{ user.username }}</strong></a><br />
+          <span class="text-muted">{{user.profiledetails.location.address}}</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div><!--row-->
+</div><!-- contain-->
+{% endblock %}

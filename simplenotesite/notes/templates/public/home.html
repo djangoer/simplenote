@@ -1,0 +1,95 @@
+{% extends "public/public_base.html" %}
+{% load note_extras %}
+{% block title %}Public Notes{% endblock %}
+{% block csslinks %}
+<style type="text/css">
+a:link {
+    text-decoration:none;
+}
+.title a{
+    padding-left: 5px;
+    font-family:Verdana;
+    font-size: 12pt;
+    color:#000000;
+}
+
+.serialnumber{
+	font-size: 10pt;
+    color:#5d5d5d;
+    vertical-align: top;
+}
+.subtext {
+    font-family:Verdana;
+    font-size: 12pt;
+    color:#828282;
+}
+.subtext a:link, .subtext a:visited {
+    color:#828282;
+}
+.subtext a:hover, .title a:hover {
+    text-decoration:underline;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container" style="padding:20px;">
+    <div class="row">
+      <div class="col-md-8">
+        {% if tags and notes %}
+        <div style="border-bottom:2px solid #ccc; margin:10px;">
+            filted by tag {% for tg in tags %}
+            <span class="label label-info">{{ tg.name }}</span> 
+            {% endfor %}
+            |  <a class="btn btn-warning" href="{% url 'public_home' %}">show all notes</a>
+        </div>
+        {% endif %}
+
+        <table border=0 cellpadding=0 cellspacing=0>
+            {% for note in notes %}
+            <tr>
+                <td class="serialnumber"><strong>{{ forloop.counter0|add:notes.start_index }}. </strong></td>
+                <td class="title"><a href="{% url 'public_note' note.pk %}{{note.title|slugify|truncatechars:60}}">{# {{note.note|truncatechars:150|markdown_to_plaintext}} #}{{ note.title }}</a>
+                </td>
+            </tr>    
+            <tr class="subtext">
+                <td colspan=1></td>
+                <td>by <a href="{% url 'user_notes' note.user.pk %}">{{note.user.username}}</a> | created on {{note.created}} | tags: {% for tg in note.tags.all %}<a href="{% url 'public_home' %}?tags={{tg.pk}}" style="text-decoration:none;"><span class="label label-info">{{ tg.name }}</span></a> {% endfor %}</td>
+            </tr>
+            <tr style="height:5px"></tr>
+            {% endfor %}
+        </table>
+        {% comment %}
+        {% if notes.paginator.num_pages > 1 %}
+        <div class="row">  
+            <div class="col-md-6 col-sm-8">
+              <div class="input-group">                      
+                <div class="input-group-btn">              
+                  <a class="btn btn-default"{% if notes.has_previous %} href="?page={{ notes.previous_page_number }}"{% else %} disabled="disabled"{% endif %}>&laquo;</a>
+                  <a class="btn btn-default">Go to page:</a>             
+                </div>            
+                <input type="text" name="page" class="form-control" placeholder="Page {{ notes.number }} of {{ notes.paginator.num_pages }}"/>
+                <div class="input-group-btn">              
+                  <a class="btn btn-default"{% if notes.has_next %} href="?page={{ notes.next_page_number }}"{% else %} disabled="disabled"{% endif %}>&raquo;</a>
+                </div>         
+              </div><!-- /.input-group -->
+            </div><!-- /.col-md-8 offset-4 -->        
+        </div><!-- /.row -->
+        {% endif %}
+        {% endcomment %}
+      </div>
+      <div class="col-md-4">
+        <p class="lead"> Tags</p><hr>
+        {% create_taglist %}        
+      </div>
+    </div><!--row-->
+    {% if notes.paginator.num_pages > 1 %}
+        {% include "includes/paginator.html" %}   
+    {% endif %}
+
+
+</div><!--container-->
+{% endblock %}
+
+
+

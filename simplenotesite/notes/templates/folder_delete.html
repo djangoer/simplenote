@@ -1,0 +1,44 @@
+ {% extends "base.html" %}
+ {% block csslinks %}
+{% endblock %}
+ {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-danger">
+        <div class="panel-heading">
+          <h3 class="panel-title">Delete Folder: {{fn}}</h3>
+        </div>
+        <div class="panel-body">
+        <p class="text-danger">
+This action CANNOT be undone. This will delete the folder <strong>{{fn}}</strong> and its notes permanently.
+</p>
+            <form role="form" method="post" action="">{% csrf_token %}
+            <div class="form-group">
+                <label for="cardNumber">
+                   Please type in the name of the folder to confirm:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" name='fname1' placeholder="confirm folder name"
+                        required autofocus />
+                    <input type="hidden" name='fname2' value="{{fn}}">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-folder-open"></span></span>
+                </div>
+            </div>
+            <a class="btn btn-default btn-lg" href='{% url "home" %}?curfolder={{fn}}'>back</a>
+            <button type="submit" class="btn btn-danger btn-lg" role="button">I understand the risk delete the folder</button>
+            
+            </form>          
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-6">
+      
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

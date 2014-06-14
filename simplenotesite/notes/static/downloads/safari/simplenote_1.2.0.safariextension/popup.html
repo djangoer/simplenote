@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<link rel="stylesheet" href="chosen.css">
+</head>
+<body>
+	<p style="color:#ccc">Easy Notes 
+	<!--<span id="not-ready" style="color:red;display:inline;">not ready</span><span id="ready" style="color:green;display:none;">ready</span>--></p>	
+	<span id="popup-error" style="color:red;display:inline;"></span>
+	<form id="frmnote">
+		<fieldset>	
+			<legend>Add Note</legend>		
+			Title: <input id='popup-title' type='text' name='title' /><br />
+			Note:<br /> <textarea id="popup-note" name='note' rows="4" cols="60"></textarea><br />
+			Folder: <select id="cmbfolder" name="folder" style="width:350px;"></select><br />
+			Tags: <select id="cmbtag" name="tag" multiple style="width:350px;"></select><br />			
+			<input id="popup-save" type="submit" value="Save"/>
+			<input id="popup-close" type="submit" value="Close"/>
+		</fieldset>
+	</form>
+	<div id="login">
+		<form id="frmlogin">
+			<legend>Login</legend>
+			username: <input id='popup-user' type='text' name='username' /><br />
+			password: <input id='popup-pass' type='password' name='password' /><br />
+			<input id="popup-login" type="submit" value="Login"/>
+		</form>
+		<hr>
+		OR<br />login using
+		<a href='http://try.simplenote.in/socialauth/login/facebook' target="_blank">facebook</a>| <a href='http://try.simplenote.in/socialauth/login/google' target="_blank">google</a> | <a href='http://try.simplenote.in/socialauth/login/twitter' target="_blank">twitter</a> | <a href='http://try.simplenote.in/socialauth/login/linkedin' target="_blank">linkedin</a>
+	</div>
+	<script type="text/javascript" src="kango-ui/kango_api.js"></script>
+	<script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="chosen.jquery.js"></script>
+	<script type="text/javascript" src="popup.js"></script>
+</body>
+</html>

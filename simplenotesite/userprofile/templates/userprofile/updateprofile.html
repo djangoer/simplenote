@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block csslinks %}
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}address/jquery-ui-1.9.2.custom.min.css">
+
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}pickadate/themes/classic.css">
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}pickadate/themes/classic.date.css">
+{% endblock %}
+{% block content %}
+<div class="container">
+	<div class="row">
+	  <div class="col-md-6 col-md-offset-3">
+  		<div class="well" style="background:#FFF;">
+		  <form id="signup" class="form-horizontal" method="post" action="">{% csrf_token %}
+			{% if tempid %}<input type="hidden" name="tempid" value="{{ tempid }}">{% endif %}
+			<fieldset>
+			  <legend>Update Your Profile</legend>
+		   	  {% crispy first_form %}
+		    </fieldset>
+		    <fieldset>
+		      <legend>Location:</legend>
+		      {% crispy second_form %}
+		      <button type="submit" class="btn btn-success">Submit</button> <a class="btn btn-danger" href="{% url 'user_profile' %}">Cancel</a>
+		    </fieldset>
+		  </form>
+		</div><!--/well-->
+	  </div>
+	</div>	
+</div><!--/conatainer-->
+{% endblock %}
+{% block javascripts %}
+<!--date picker-->
+<script src="{{STATIC_URL}}pickadate/picker.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{STATIC_URL}}pickadate/picker.date.js" type="text/javascript" charset="utf-8"></script>
+<!--/-->
+
+<!-- Address Picker-->
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script src="{{STATIC_URL}}address/jquery-ui-1.9.2.custom.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{STATIC_URL}}address/ui.addresspicker.js" type="text/javascript" charset="utf-8"></script>
+<!--/-->
+<script type="text/javascript">
+$(document).ready(function() {
+
+  $('#id_dob').pickadate({
+    // `true` defaults to 10.
+    selectYears: 60,
+    format: 'mm/dd/yyyy',
+    //formatSubmit: 'mm/dd/yyyy',    
+    max: true
+  })  
+  var location='{{ loc }}';    
+  if (location){
+      $('#gmapaddress').val(location);         
+  }  
+  // Address Picker
+  var addresspickerMap = $("#gmapaddress").addresspicker({
+    regionBias: "india",
+    /*updateCallback: showCallback,*/
+    reverseGeocode: 'true',
+    autocomplete: 'bootstrap',
+    elements: {
+      map: "#map_canvas",
+      lat: "#id_lat",
+      lng: "#id_lng",
+      street_number: '#street_number',
+      route: '#route',
+      locality: '#id_locality',
+      administrative_area_level_2: '#id_district',
+      administrative_area_level_1: '#id_state',
+      country: '#id_country',
+      postal_code: '#id_postal_code',
+      type: '#type'     
+    }
+  });
+  var gmarker = addresspickerMap.addresspicker( "marker");
+  gmarker.setVisible(true);
+  addresspickerMap.addresspicker( "updatePosition");
+  //function showCallback(geocodeResult, parsedGeocodeResult){
+   // $('#callback_result').text(JSON.stringify(
+   //   parsedGeocodeResult, null, 4));
+  //  }
+  //End of address picker
+});
+</script>
+{% endblock %} 

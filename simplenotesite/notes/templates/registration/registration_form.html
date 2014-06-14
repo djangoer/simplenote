@@ -1,0 +1,55 @@
+{% extends "registration/registration_base.html" %}
+{% block title %}Register for an account{% endblock %}
+{% block csslinks %}
+<style type="text/css">
+.form-signup {
+  max-width: 440px;
+  padding: 25px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  
+}
+.errors {
+  font-size: 12px; 
+  border:1px solid red;  
+  background:#ffebe8; 
+
+}
+ul.errorlist{
+	list-style-type: none;
+}
+
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">	
+	<form method='post' onsubmit="return validateFormOnSubmit(this)" class="form-signup" action=''>{% csrf_token %}
+		<fieldset>
+	    <div id="legend">
+	      <legend class="">Register</legend>
+	    </div>
+	    {% if form.errors %}
+		  	<div class="errors">
+		  		{{ form.errors }}			
+			</div>
+		{% endif %}
+
+	    <label>Username:</label>
+		<input type="text" class="form-control" id="id_username" name="username" placeholder="Username" maxlength="30">
+		<label>Email:</label>
+		<input type="text" class="form-control" name="email" id="id_email" placeholder="E-mail" maxlength="30">
+		<label>Password:</label>
+	    <input type="password" id="id_password1" name="password1" class="form-control" placeholder="Password">
+	    <label>Password(again):</label>
+	    <input type="password" id="id_password2" name="password2" class="form-control" placeholder="Password (again)">
+	    <br>
+        <button class="btn btn-success" type="submit">Send activation email</button><br><br>
+        <a class="btn btn-default" href="{% url 'auth_login' %}">Back to login</a><a class="btn btn-default" href="{% url 'public_home' %}">Public Notes</a>
+        </fieldset>
+    </form>	
+</div>
+
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/registration_form_validate.js"></script>
+{% endblock %}

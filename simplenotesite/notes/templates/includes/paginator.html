@@ -1,0 +1,11 @@
+ <ul class="pagination">
+    {% if notes.has_previous %}
+    <li><a href="?page={{ notes.previous_page_number }}">
+    &laquo;</a></li>
+    {% endif %}
+    <li class="active"><a href="#">Page {{ notes.number }} of {{ notes.paginator.num_pages }}<span class="sr-only">(current)</span></a></li>
+    {% if notes.has_next %}
+    <li><a href="?page={{ notes.next_page_number }}">»</a>
+    </li>
+    {% endif %}    
+</ul>

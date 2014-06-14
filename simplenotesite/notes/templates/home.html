@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% load note_extras %}
+{% load humanize %}
+{% block csslinks %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/markdownpreview.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/sidenav.css">
+<!--highlightjs-->
+<link rel="stylesheet" href="{{ STATIC_URL }}highlightjs/themes/default.css">
+<!--
+please vist:http://jmblog.github.io/color-themes-for-highlightjs/
+for more themes
+http://softwaremaniacs.org/media/soft/highlight/test.html
+================================================================
+
+0. tomorrow-night.css
+1. tomorrow-night-bright.css
+2. tomorrow-night-eighties.css
+3. tomorrow-night-blue.css
+4. tomorrow.css
+5. hemisu-light.css
+6. hemisu-dark.css
+-->
+
+<style type="text/css">
+/*
+#lovely-things-list li{
+  list-style-type: none;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}*/
+.description{
+  display:none;
+
+}
+div.contents{
+  padding:10px;
+}
+/* start jquery pagination*/
+ul.simplePagerNav li{
+    display:block;
+    float: left;
+    padding: 10px;    
+    font-family: georgia;
+  font-size:14px;
+}
+
+ul.simplePagerNav li a{
+    color: #333;
+    text-decoration: none;
+}
+li.currentPage { 
+    background:#5A5A93;
+}
+
+ul.simplePagerNav li.currentPage a {
+  color: #fff;
+}
+span.tagbtn { cursor: pointer; font-size: .9em; margin: 5px;}
+.lsep { margin: 0px 2px 0px 2px; color: #ccc; font-size: 110%;}
+
+.post-menu {padding-top: 10px;}
+.post-menu>a{ padding: 4px 3px 2px 3px; color: #4a6b82; }
+.post-menu>a:hover {color: #fff; background: #ff9900; text-decoration: none;}
+
+/* end of jquery pagination*/
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">
+<a id="hidesidebar"><span class="glyphicon glyphicon-transfer"></span>Hide Tabs</a>
+  <div class="row">
+    <div class="col-md-3">          
+      <div class="list-group">
+        {% with 'all url public' as list %}
+          {% for folder in list.split %}
+            <a href="#" class="ajaxLoad list-group-item{% ifequal next folder %} active{% endifequal %}" data-ajxurl="{{ folder }}"> {{ folder|upper }}</a>    
+          {% endfor %}
+        {% endwith %}       
+      </div>
+      <div class="bs-sidebar">
+        <button onclick="funCreateFolder('{% url 'add_folder' %}','{% url 'home' %}')" type="button" class="btn btn-success btn-xs">add new folder</button>
+        <ul class="nav bs-sidenav">
+          {% for folder in folders %}                       
+            <li{% ifequal next folder.name %} class="active"{% endifequal %}>            
+            <a class="ajaxLoad" href="#" data-ajxurl="{{ folder.name }}"><span class="badge pull-right">
+            {{ folder.id|note_count_in_folder:request.user.pk }}
+            </span>{{ folder.name }}</a></li>           
+          {% endfor %}
+        </ul>
+        <hr style="border:0; margin-bottom:50px;" >
+      </div>
+    </div>    
+    <main class="col-md-9" role="main" id="ajaxBox">
+<!-- jquery load
+=================================================================================
+AJAX LOADING
+
+-->
+    </main>
+  </div>  
+</div>
+
+<!-- ajax loading
+ showing loading gif
+====================-->
+<link rel="stylesheet" href="{{ STATIC_URL }}css/ajaxloading_disable_input.css">
+<div class="ajaxloading"><!-- Place at bottom of page --></div>
+<!--end of ajax loading-->
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.quick.pagination.min.js"></script>
+<!--highlight js-->
+<script type="text/javascript" src="{{ STATIC_URL }}highlightjs/highlight.pack.js"></script>
+<!--<script type="text/javascript" src="{{ STATIC_URL }}js/bootbox.min.js"></script>-->
+<script src="{{ STATIC_URL }}js/createfolder.js"></script>
+<script>
+$( document ).ready(function() {
+  var deletednoteid='';
+  {#alert('{% url "ajax_load_to_div" "all" %}');#}
+  $("ul.bs-sidenav").quickPagination();
+  $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+  $('#ajaxBox').load('/ajx/?curfolder={{next}}&page={{page}}{% if tags %}&tags={{tags}}{% endif %}');  
+  $('.ajaxLoad').click(function(e)
+    {
+      e.preventDefault();
+      var url='/ajx/?curfolder='+ $(this).data('ajxurl'); 
+      //$('#lovely-things-list').load(url);
+      $('#ajaxBox').load(url);
+      //featureList = new List('lovely-things-list', {valueNames: ['description']});
+      //--------------------------------------
+      // make active the selected nav button |
+      //--------------------------------------
+
+      //remove class active from all
+      $("a.list-group-item").removeClass('active');
+      $("ul.bs-sidenav li").removeClass('active');
+
+      //add class active to selected nav button
+      if ($(this).hasClass('list-group-item')){
+        $(this).addClass('active');
+      }else{
+        $(this).closest("li").addClass('active');
+      }
+      //-------------------------------------
+      
+    });
+
+  $(document).on({
+    // When ajaxStart is fired, add 'loading' to body class
+    ajaxStart: function() { 
+        $("body").addClass("loading"); 
+    },
+    // When ajaxStop is fired, rmeove 'loading' from body class
+    ajaxStop: function() { 
+        $("body").removeClass("loading"); 
+    }    
+  });
+
+  $("#hidesidebar").click(function(){
+    $(".col-md-3").toggle();
+    if ($(this).text()=='Hide Tabs'){
+      $(this).text('Show Tabs');
+    }else{
+      $(this).text('Hide Tabs');
+    }  
+  });
+
+  $(document).on('click', '#delNote', function () {    
+    var nt=$(this).data('noteid');
+    var delurl="{% url 'delete_note' %}?delnote="+nt;
+    Alertify.dialog.confirm("Are you sure want to delete the note", function() {      
+      $.get(delurl).done(function(x){
+        if (x=='1'){
+          $("#n"+nt).remove();
+          Alertify.log.success("Note removed Successfully.");
+        }
+        else Alertify.log.error("Error: " + x);
+      });  
+    });
+  });
+
+  $(document).on('click',".tagbtn",function(){
+    $('#ajaxBox').load($(this).data('url')); 
+  });
+  
+}); 
+
+
+</script>
+{% endblock %}
