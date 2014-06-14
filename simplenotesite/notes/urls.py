@@ -38,7 +38,7 @@ urlpatterns += patterns('userprofile.views',
     url(r'^profile/settings/$', 'profile',name='user_profile'),
     url(r'^profile/uploadpic/$', 'uploadpic',name='upload_pic'),
     url(r'^profile/update/$', profileUpdate.as_view(), name='profile_update'),    
-)
+)+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
