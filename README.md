@@ -10,6 +10,13 @@ wsgi.py
 + os.environ['DJANGO_SETTINGS_MODULE'] = 'notes.settings'
 + sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'],'simplenotesite'))
 
+MySQL database credentials:
+---------------------------
+
+	Root User: adminP9Dd99m
+	Root Password: SksnIeCAbpB2
+	Database Name: simplenote
+	Connection URL: mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/
 
 URL Saving
 ==========
