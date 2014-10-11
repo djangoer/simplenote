@@ -47,12 +47,14 @@ def seperate_ActiveInactiveTags(taglist):
     #INPUT
     #taglist=[(3,1,'git'),(0,4,'os'),........]
     taglist.sort(reverse=True)
-    nonotes_tag,notes_tag='',''
+    #nonotes_tag,notes_tag='',''
     for c,i in enumerate(taglist):
         if i[0]==0:
+            if c==0:return (taglist,'')
             notes_tag= taglist[:c]
             nonotes_tag=taglist[c:]
             return (nonotes_tag,notes_tag)
+    return ('',taglist)
 
 
 @register.simple_tag
