@@ -4,3 +4,4 @@ Pillow
 markdown
 django-registration
 django-crispy-forms
+MySQL-python
