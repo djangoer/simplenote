@@ -96,7 +96,7 @@
         <a href="{{ STATIC_URL }}downloads/easynotes_1.2.0.crx">
         <img src="{{ STATIC_URL }}img/compatible_chrome.gif" width="21" height="20" alt="Google Chrome" title="Google Chrome" /></a> |
         <img src="{{ STATIC_URL }}img/compatible_safari.gif" width="18" height="20" alt="Safari" title="Safari" />--> |         
-        Created by <a href="http://www.capsone.com">Capsone</a>
+        copyright (c) by <a href="http://www.djangoer.com">Djangoer</a>
     </p>    
   </div>
 </div>
@@ -119,16 +119,14 @@
 {% block javascripts %}
 {% endblock %} 
 <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-46729046-1']);
-  _gaq.push(['_setDomainName', 'simplenote.in']);
-  _gaq.push(['_trackPageview']);
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+  ga('create', 'UA-46729046-3', 'auto');
+  ga('send', 'pageview');
+
 </script>
 </body>
 </html>

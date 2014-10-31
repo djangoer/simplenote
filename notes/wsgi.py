@@ -1,7 +1,7 @@
 import os
 import sys
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'myproject.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'notes.settings'
 
 
 virtenv =os.path.join(os.environ['HOME'],'webapps','notes','nenv','bin','activate_this.py')

@@ -3,7 +3,7 @@
 {% url 'home' as mynotes %}
 {% url 'add_note' 'new' as addnote %}
 {% url 'user_profile' as settings %}
-{% url 'registration_register' as signup %}
+{% url 'auth_login' as login %}
 {% url 'tags' as urltags %}
 {% load note_extras %}
 <header id="mainHeader" class="navbar-fixed-top" role="banner">
@@ -57,7 +57,7 @@
         -->
         {% else %}
         <li{% if request.path == login %} class="active"{% endif %}>
-            <a href="#"><i class="glyphicon glyphicon-log-in"></i> Login</a>
+            <a href="{{login}}"><i class="glyphicon glyphicon-log-in"></i> Login</a>
         </li>
 
         <li{% if request.path == signup %} class="active"{% endif %}>
@@ -94,7 +94,7 @@
                     <li><a href="{% url 'profile_update' %}"><i class="glyphicon glyphicon-edit icon-dropdown"></i> <span>Update Profile</span></a>
                     </li>
 
-                    <li><a href="#?next=/doc/"><i class="glyphicon glyphicon-off icon-dropdown"></i> <span>Logout</span></a>
+                    <li><a href="{% url 'auth_logout' %}?next=/doc/"><i class="glyphicon glyphicon-off icon-dropdown"></i> <span>Logout</span></a>
 
                     </li>
                 </ul>
