@@ -26,7 +26,7 @@ ALLOWED_HOSTS = []
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'Asia/Calcutta'
+TIME_ZONE = 'UTC'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -135,9 +135,9 @@ INSTALLED_APPS = (
     #'django.contrib.markup',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'social_auth',
+    #'social_auth',
     'note',
-    'registration',
+    #'registration',
     'userprofile',
     'crispy_forms',
     
@@ -149,86 +149,10 @@ INSTALLED_APPS = (
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 
-AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.twitter.TwitterBackend',
-    'social_auth.backends.facebook.FacebookBackend',
-    #'social_auth.backends.google.GoogleOAuthBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
-    'social_auth.backends.google.GoogleBackend',
-    'social_auth.backends.yahoo.YahooBackend',
-    #'social_auth.backends.browserid.BrowserIDBackend',
-    'social_auth.backends.contrib.linkedin.LinkedinBackend',
-    #'social_auth.backends.contrib.disqus.DisqusBackend',
-    #'social_auth.backends.contrib.livejournal.LiveJournalBackend',
-    #'social_auth.backends.contrib.orkut.OrkutBackend',
-    #'social_auth.backends.contrib.foursquare.FoursquareBackend',
-    #'social_auth.backends.contrib.github.GithubBackend',
-    #'social_auth.backends.contrib.vk.VKOAuth2Backend',
-    #'social_auth.backends.contrib.live.LiveBackend',
-    #'social_auth.backends.contrib.skyrock.SkyrockBackend',
-    #'social_auth.backends.contrib.yahoo.YahooOAuthBackend',
-    #'social_auth.backends.contrib.readability.ReadabilityBackend',
-    #'social_auth.backends.contrib.fedora.FedoraBackend',
-    #'social_auth.backends.OpenIDBackend',
+AUTHENTICATION_BACKENDS = (    
     'django.contrib.auth.backends.ModelBackend',
+    'django_cas_ng.backends.CASBackend',
 )
-
-TWITTER_CONSUMER_KEY         = 'oYJ7HIUoCXR6luGOF6M5NQ'
-TWITTER_CONSUMER_SECRET      = 'c7EBWJkEQATKasVWLa83HvWmRuPYtOa2900feNRi40'
-FACEBOOK_APP_ID              = '300242133500110'
-FACEBOOK_API_SECRET          = '7d0b59cca13d5d56edeed5963e61261f'
-LINKEDIN_CONSUMER_KEY        = 'n36y45tfip7i'
-LINKEDIN_CONSUMER_SECRET     = 'px3cE9NlgrhDSTkp'
-ORKUT_CONSUMER_KEY           = ''
-ORKUT_CONSUMER_SECRET        = ''
-GOOGLE_CONSUMER_KEY          = ''
-GOOGLE_CONSUMER_SECRET       = ''
-GOOGLE_OAUTH2_CLIENT_ID      = '47716508428.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET  = 'sRXUpoFRqMe4Fu686WKYq3ti'
-FOURSQUARE_CONSUMER_KEY      = ''
-FOURSQUARE_CONSUMER_SECRET   = ''
-VK_APP_ID                    = ''
-VK_API_SECRET                = ''
-LIVE_CLIENT_ID               = '000000004C0F8E28'
-LIVE_CLIENT_SECRET           = '75uS5WBYHZ9xCZGECbjXktHPlKmd7E7t'
-SKYROCK_CONSUMER_KEY         = ''
-SKYROCK_CONSUMER_SECRET      = ''
-YAHOO_CONSUMER_KEY           = 'dj0yJmk9RXZLMVdVNTF1MVF1JmQ9WVdrOVNqRXlRM2xZTjJzbWNHbzlNVFEyTURFNE5qazJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD1kYw--'
-YAHOO_CONSUMER_SECRET        = '964ee9ee1d65615c8a784bb69c632a5089308c39'
-READABILITY_CONSUMER_SECRET  = ''
-READABILITY_CONSUMER_SECRET  = ''
-GITHUB_APP_ID = 'fcd321fd035e7222093b'
-GITHUB_API_SECRET = '329ffbb67ca69fe5abab6539901c7aaa62204e64'
-
-FACEBOOK_EXTENDED_PERMISSIONS = ['email']
-FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'ru_RU'}
-LINKEDIN_SCOPE = ['r_basicprofile','r_emailaddress']
-LINKEDIN_EXTRA_FIELD_SELECTORS = ['email-address']
-LINKEDIN_EXTRA_DATA = [('id', 'id'),
-                       ('first-name', 'first_name'),
-                       ('last-name', 'last_name'),
-                       ('email-address', 'email_address')]
-TWITTER_EXTRA_DATA = [('email', 'email')]
-
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/?new=y'
-
-SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
-SOCIAL_AUTH_PIPELINE = (
-    'social_auth.backends.pipeline.social.social_auth_user',
-    'social_auth.backends.pipeline.associate.associate_by_email',
-    'social_auth.backends.pipeline.user.get_username',
-    'social_auth.backends.pipeline.user.create_user',
-    'social_auth.backends.pipeline.social.associate_user',
-    'social_auth.backends.pipeline.social.load_extra_data',
-    'social_auth.backends.pipeline.user.update_user_details',
-    'social_auth.backends.pipeline.misc.save_status_to_session',
-   # 'app.pipeline.redirect_to_basic_user_data_form'
-)
-
-
-ACCOUNT_ACTIVATION_DAYS = 7
-SITE_URL='http://www.simplenote.in'
 
 # gmail server settings
 EMAIL_HOST = 'smtp.gmail.com'
@@ -237,9 +161,10 @@ EMAIL_HOST_PASSWORD = 'pnaoeogqwtqlgusd'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-LOGIN_ERROR_URL='/publicnote/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+CAS_SERVER_URL='http://djangoer.com/cas/'
 
 on_webfaction=True
 if on_webfaction:
@@ -251,11 +176,10 @@ if on_webfaction:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2', 
-            'NAME': 'simplenote',
+            'NAME': 'notes',
             'USER': 'suhail',
             'PASSWORD': 'suhail',
-            'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-            'PORT': '3306',
+            'HOST': '',   # Or an IP Address that your DB is hosted on            
         }
     }
 

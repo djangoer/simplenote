@@ -6,9 +6,9 @@ from django.views.generic import TemplateView
 admin.autodiscover()
 
 
-urlpatterns = patterns('',
-    url(r'^accounts/', include('registration.backends.default.urls')),
-    url(r'^socialauth/', include('social_auth.urls')),
+urlpatterns = patterns('',    
+    url(r'^login/$','django_cas_ng.views.login',name='auth_login'),
+    url(r'^logout/$','django_cas_ng.views.logout',name='auth_logout'),
     url(r'^admin/', include(admin.site.urls)),
 )
 from notes.views import MyHome
