@@ -4,4 +4,5 @@ Pillow
 markdown
 django-registration
 django-crispy-forms
-MySQL-python
+psycopg2 
+#MySQL-python

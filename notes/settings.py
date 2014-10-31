@@ -243,14 +243,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 on_webfaction=True
 if on_webfaction:
-    STATIC_URL = 'http://static.suhails.in/simplenote/'
+    STATIC_URL = 'http://static.suhails.in/notes/'
     MEDIA_URL = STATIC_URL+'media/'
-    STATIC_ROOT='/home/suhailvs/webapps/htdocs/simplenote/'
+    STATIC_ROOT='/home/suhailvs/webapps/htdocs/notes/'
     MEDIA_ROOT = os.path.join(STATIC_ROOT,'media')
 
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql', 
+            'ENGINE': 'django.db.backends.postgresql_psycopg2', 
             'NAME': 'simplenote',
             'USER': 'suhail',
             'PASSWORD': 'suhail',
