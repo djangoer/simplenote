@@ -164,7 +164,7 @@ EMAIL_USE_TLS = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-CAS_SERVER_URL='http://djangoer.com/cas/'
+CAS_SERVER_URL='http://stack.djangoer.com/cas/'
 
 on_webfaction=True
 if on_webfaction:
