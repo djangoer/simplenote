@@ -1,15 +1,15 @@
-<!DOCTYPE html>
+{% load static %}<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-    <title>{% block title %}{% endblock %} Simple Note</title>
-    <meta name="domain" content="simplenote.in"/>
+    <title>{% block title %}{% endblock %} FlipNotes</title>
+    <meta name="domain" content="flipnotes.net"/>
     <meta name="title" content={% block metatitle %}"SimpleNote is a web-based application for taking both private note and public notes. perfect for simple and clean presentation of your business."{% endblock %} />
     <meta name="description" content={% block metadescription %}"In today's electronic world, it can be quite a challenge to organize all useful information such as web clips, articles, bits of text, images, interesting web links, bookmarks, shopping lists, to-do lists, recipes, tips, passwords, secretkeys, contact list, everyday task, ideas and many others that are hanging around US. Flicknote is an excellent solution to manage these snippets of information."{% endblock %}/>
-     <meta name="url" content={% block metaurl %}"http://simplenote.in/"{% endblock %}/>
-   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"> 
-<!--<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">-->
+     <meta name="url" content={% block metaurl %}"http://flipnotes.net/"{% endblock %}/>
+  <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <!--THEMES
     {{ STATIC_URL }}css/bootstrap.css
     bootstrap_default.min.css
@@ -21,7 +21,7 @@
     bootstrap_ubuntu.min.css
     bootstrap_flatty.min.css
     -->
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/sticky-footer.css">
+    <link rel="stylesheet" href="{% static 'css/sticky-footer.css' %}">
     <!--<link rel="stylesheet" href="/static/bootswatch.min.css">-->
 
     <!-- font update 
@@ -52,11 +52,11 @@
     </style>
 
     {% if request.user.is_active %}
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/navdropdown.css">
+        <link rel="stylesheet" href="{% static 'css/navdropdown.css' %}">
         
         <!--alertify testings http://fabien-d.github.io/alertify.js/-->
-        <link rel="stylesheet" href="{{ STATIC_URL }}alertify/alertify.css">
-        <link rel="stylesheet" href="{{ STATIC_URL }}alertify/alertify.default.css">
+        <link rel="stylesheet" href="{% static 'alertify/alertify.css' %}">
+        <link rel="stylesheet" href="{% static 'alertify/alertify.default.css' %}">
         <!-- end alertify also there is a js -->
     {% endif %}
     <!-- end of form update
@@ -67,10 +67,10 @@
     {% block css_registration %}
     {% endblock %}
     <!--<link rel="stylesheet" href="{{ STATIC_URL }}font-awesome/css/font-awesome.min.css">-->
-    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/theme/navbar.css">
-    <link type="text/css" id="colors" rel="stylesheet" href="{{ STATIC_URL }}css/theme/yellow.css">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/theme/navbar.css' %}">
+    <link type="text/css" id="colors" rel="stylesheet" href="{% static 'css/theme/yellow.css' %}">
     <style> a{color:#3E6D92;} .navbar-nav li{border-left: 1px solid #e3ae57;} .navbar-brand{padding:0;}</style><!--#e3ae57,#EEBE24-->
-    <link rel="shortcut icon" href="{{ STATIC_URL }}img/notes.png">
+    <link rel="shortcut icon" href="{% static 'img/notes.png' %}">
 </head>
 <body>
 <!-- Wrap all page content here -->
@@ -85,8 +85,8 @@
   <div class="container">
     <p class="text-muted credit">
         Download Browser Extensions - 
-        <a href="{{ STATIC_URL }}downloads/easynotes_1.2.0.xpi">
-        <img src="{{ STATIC_URL }}img/compatible_firefox.gif" width="21" height="20" alt="Firefox" title="Firefox" /> </a>
+        <a href="{% static 'downloads/easynotes_1.2.0.xpi' %}">
+        <img src="{% static 'img/compatible_firefox.gif' %}" width="21" height="20" alt="Firefox" title="Firefox" /> </a>
         <!--
         <img src="{{ STATIC_URL }}img/compatible_ie.gif" width="20" height="20" alt="Internet Explorer" title="Internet Explorer" /> |
         <a href="{{ STATIC_URL }}downloads/easynotes_1.2.0.xpi">
@@ -95,17 +95,16 @@
         <img src="{{ STATIC_URL }}img/compatible_opera.gif" width="18" height="20" alt="Opera" title="Opera" /></a> |
         <a href="{{ STATIC_URL }}downloads/easynotes_1.2.0.crx">
         <img src="{{ STATIC_URL }}img/compatible_chrome.gif" width="21" height="20" alt="Google Chrome" title="Google Chrome" /></a> |
-        <img src="{{ STATIC_URL }}img/compatible_safari.gif" width="18" height="20" alt="Safari" title="Safari" />--> |         
-        copyright (c) by <a href="http://www.djangoer.com">Djangoer</a>
+        <img src="{{ STATIC_URL }}img/compatible_safari.gif" width="18" height="20" alt="Safari" title="Safari" />--> |       
     </p>    
   </div>
 </div>
 <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
-<script src="{{ STATIC_URL }}js/jquery.js"></script>
-<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
 
 {% if request.user.is_active %}
-<script src="{{ STATIC_URL }}alertify/alertify.min.js"></script>
+<script src="{% static 'alertify/alertify.min.js' %}"></script>
 <script type="text/javascript">
 {% if messages %}
     {% for message in messages %}
@@ -119,14 +118,16 @@
 {% block javascripts %}
 {% endblock %} 
 <script type="text/javascript">
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-46729046-1']);
+  _gaq.push(['_setDomainName', 'flipnotes.net']);
+  _gaq.push(['_trackPageview']);
 
-  ga('create', 'UA-46729046-3', 'auto');
-  ga('send', 'pageview');
-
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
 </script>
 </body>
 </html>

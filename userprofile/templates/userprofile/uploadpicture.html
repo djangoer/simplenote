@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block csslinks %}
-<link rel="stylesheet" href="{{ STATIC_URL }}jcrop/jquery.Jcrop.min.css">
+<link rel="stylesheet" href="{% static 'jcrop/jquery.Jcrop.min.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -20,7 +22,7 @@
 {% endblock %}
 
 {% block javascripts %}
-<script src="{{ STATIC_URL }}jcrop/jquery.Jcrop.min.js"></script>
+<script src="{% static 'jcrop/jquery.Jcrop.min.js' %}"></script>
 <script type="text/javascript">	
 	function showCoords(c){
 		//var str_vals='x:'+c.x+',y:'+c.y;

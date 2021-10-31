@@ -4,11 +4,11 @@ from django.contrib.auth.models import User
 
 class ProfilePicture(models.Model):
     avatar = models.ImageField("Profile Pic", upload_to="images/")
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     #user = models.ForeignKey(User)
     #uploaddate=models.DateTimeField(auto_now_add = True)
-    def __unicode__(self):
-        return unicode(self.user)
+    def __str__(self):
+        return self.user
 
 class GMapLocation(models.Model):
     address=models.CharField(max_length=200, blank=True)
@@ -22,10 +22,10 @@ class GMapLocation(models.Model):
 
 
 class ProfileDetails(models.Model):
-	user = models.OneToOneField(User)
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	dob = models.DateField(blank=True,null=True)
 	#email = models.EmailField(max_length=50, blank=True)
-	location =models.OneToOneField(GMapLocation)
+	location =models.OneToOneField(GMapLocation, on_delete=models.CASCADE)
 	website=models.CharField(max_length=50, blank=True)	
 	summary=  models.TextField()
 	phone=models.CharField(max_length=15, blank=True)

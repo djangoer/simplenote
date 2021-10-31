@@ -4,7 +4,7 @@ from note.models import Notes,Folder,Tag
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from userprofile.models import ProfilePicture
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -13,8 +13,7 @@ from django.contrib import messages
 
 @login_required
 def addnote(request,ntid):	
-	if request.method=='POST':
-		print request.POST
+	if request.method=='POST':		
 		if 'noteid' in request.POST:
 			#update note
 			nt=Notes.objects.get(id=request.POST['noteid'])
@@ -88,15 +87,29 @@ def userlist(request):
 	usrs=User.objects.filter(is_active=True,is_superuser=False)
 	return render(request,'public/users.html',{'users':usrs})
 
+def create_new_tag(tag):
+	tname = tag.lower()
+	if re.match(r"\w{3,20}$", tname):
+		obj, created = Tag.objects.get_or_create(name=tname)
+		if created:	return 1,obj.pk
+		return 0,'Error: Tag with name: %s already exist.' %tname
+	return 0,'The Tag name must be between 3 and 20 Alphanumeric characters.'
+
+
+@login_required
+def addtag(request):
+	status,message = create_new_tag(request.GET.get('tag')) 	
+	return HttpResponse(json.dumps(dict(flag=status,msg=message)), content_type="application/json")
+
 @login_required
 def taglist(request):	
 	if request.method=="POST":
-		tname=request.POST['name'].lower()
-		obj, created = Tag.objects.get_or_create(name=tname)
-		if created:
+		status,message = create_new_tag(request.POST.get('name')) 		
+		if status == 1:
 			messages.success(request, 'Tag added successfully.')
 			return HttpResponseRedirect(reverse('tags'))
-		else:messages.error(request, 'Error: Tag with name: %s already exist.' %tname)
+		else:
+			messages.error(request, message)
 	tags=Tag.objects.order_by('name')
 	return render(request,'tags.html',{'tags':tags})
 
@@ -111,5 +124,4 @@ def addfolder(request):
 			fd.save()
 			status,message=1,fd.pk
 	else:status,message=0,'The Folder name must be between 3 and 20 Alphanumeric characters.'
-	return HttpResponse(json.dumps(dict(flag=status,msg=message)), mimetype="application/json")
-	
+	return HttpResponse(json.dumps(dict(flag=status,msg=message)), content_type="application/json")
