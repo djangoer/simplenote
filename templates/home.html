@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
 {% load note_extras %}
 {% load humanize %}
 {% block csslinks %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/markdownpreview.css">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/sidenav.css">
+<link rel="stylesheet" href="{% static 'css/markdownpreview.css' %}">
+<link rel="stylesheet" href="{% static 'css/sidenav.css' %}">
 <!--highlightjs-->
-<link rel="stylesheet" href="{{ STATIC_URL }}highlightjs/themes/default.css">
+<link rel="stylesheet" href="{% static 'highlightjs/themes/default.css' %}">
 <!--
 please vist:http://jmblog.github.io/color-themes-for-highlightjs/
 for more themes
@@ -103,17 +104,17 @@ AJAX LOADING
 <!-- ajax loading
  showing loading gif
 ====================-->
-<link rel="stylesheet" href="{{ STATIC_URL }}css/ajaxloading_disable_input.css">
+<link rel="stylesheet" href="{% static 'css/ajaxloading_disable_input.css' %}">
 <div class="ajaxloading"><!-- Place at bottom of page --></div>
 <!--end of ajax loading-->
 {% endblock %}
 
 {% block javascripts %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.quick.pagination.min.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery.quick.pagination.min.js' %}"></script>
 <!--highlight js-->
-<script type="text/javascript" src="{{ STATIC_URL }}highlightjs/highlight.pack.js"></script>
+<script type="text/javascript" src="{% static 'highlightjs/highlight.pack.js' %}"></script>
 <!--<script type="text/javascript" src="{{ STATIC_URL }}js/bootbox.min.js"></script>-->
-<script src="{{ STATIC_URL }}js/createfolder.js"></script>
+<script sjs/createfolder.jsrc=""></script>
 <script>
 $( document ).ready(function() {
   var deletednoteid='';

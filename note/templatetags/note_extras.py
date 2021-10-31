@@ -1,10 +1,10 @@
 from django import template
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup # from BeautifulSoup import BeautifulSoup
 import markdown as mkdn
 from django.utils.safestring import mark_safe
 from note.models import Notes,Tag
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 register = template.Library()
 
 @register.filter
@@ -14,7 +14,7 @@ def markdown(value,smode=None):
 @register.filter
 def markdown_to_plaintext(value):	
 	html = mkdn.markdown(value)
-	return ''.join(BeautifulSoup(html).findAll(text=True))
+	return ''.join(BeautifulSoup(html).find_all(text=True))
 
 @register.filter
 def note_count_in_folder(fdid,usr):	
@@ -30,18 +30,18 @@ def getthumbnail(usr,pixel):
     return prof
 
 #template tag
-@register.simple_tag
-def create_pagination(paginator,curpage):
-	#p.num_pages
-    totalp=paginator.num_pages()#pages.total_count()
-    head='<div id="light-pagination" class="pagination light-theme simple-pagination"><ul>'
-    if totalp < 8:
-        for page in range(1,totalp+1):
-            if page==curpage:
-                head+='<li class="active"><span class="current">%s</span></li>' %page
-            else:
-                head+='<li><a href="?page=%s" class="page-link">%s</a></li>' %(page,page)    
-    return head+'</ul></div>'
+# @register.simple_tag
+# def create_pagination(paginator,curpage):
+# 	#p.num_pages
+#     totalp=paginator.num_pages()#pages.total_count()
+#     head='<div id="light-pagination" class="pagination light-theme simple-pagination"><ul>'
+#     if totalp < 8:
+#         for page in range(1,totalp+1):
+#             if page==curpage:
+#                 head+='<li class="active"><span class="current">%s</span></li>' %page
+#             else:
+#                 head+='<li><a href="?page=%s" class="page-link">%s</a></li>' %(page,page)    
+#     return head+'</ul></div>'
 
 def seperate_ActiveInactiveTags(taglist):
     #INPUT
@@ -67,7 +67,7 @@ def create_tagmenu(usr=None):
     turl=reverse('home')
     for tg in notes_tag:
         str_html+='<li><a href="{url}?tags={tag[1]}&curfolder=all"><span class="label label-warning">{tag[2]}</span> x {tag[0]}</a></li>'.format(tag=tg,url=turl)
-    return str_html
+    return mark_safe(str_html)
 
 @register.simple_tag
 def create_taglist(usr=None,private=None):
@@ -91,4 +91,4 @@ def create_taglist(usr=None,private=None):
         str_html+='<hr /><p class="lead">Tags that not used for any notes:</p>'
         for tg in nonotes_tag:str_html+=' <span class="label label-default">{0}</span>'.format(tg[2])
         str_html+='<p class="text-danger"> Warning if a tag does not used for any notes for one month it will be automatically deleted.</p>'    
-    return str_html
+    return mark_safe(str_html) #return str_html

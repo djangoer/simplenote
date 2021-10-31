@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
 {% block csslinks %}
 
-<link rel="stylesheet" href="{{ STATIC_URL }}flexslider/flexslider.css">
+<link rel="stylesheet" href="{% static 'flexslider/flexslider.css' %}">
 <style type="text/css">
 #login{background:#F7F7F7;}
 #about{background: #EEBE24; font-size: 20px;}
@@ -24,11 +25,11 @@ span.iconBig {
 					<ul class="slides">
 						<li>
 							<h1>Fast:</h1>
-							<h2>simplenote.in is built for speed and performance. You can take notes Quickly.</h2>
+							<h2>flipnotes.net is built for speed and performance. You can take notes Quickly.</h2>
 						</li>
 						<li>
 							<h1>Easy</h1>
-							<h2>SimpleNote.in offer amazing and cool features which makes it powerful, simple to use and reliable.</h2>
+							<h2>flipnotes.net offer amazing and cool features which makes it powerful, simple to use and reliable.</h2>
 						</li>
 						<li>
 							<h1>Share</h1>
@@ -49,7 +50,7 @@ span.iconBig {
 		<h1>Introduction</h1>
 		<div class="row">			
 			<div class="col-sm-8">				
-				<blockquote><strong>simplenote.in</strong> is a web-based application for taking both private note and public notes. perfect for simple and clean presentation of your ideas.</blockquote>
+				<blockquote><strong>flipnotes.net</strong> is a web-based application for taking both private note and public notes. perfect for simple and clean presentation of your ideas.</blockquote>
 			</div>			
 		</div>
 	</div>
@@ -115,11 +116,11 @@ span.iconBig {
         <h1 style="border-bottom:1px solid #ccc;">Log in with SocialAccounts</h1>
         <div class="row">
             <div class="col-xs-8">                
-                <p class="lead" style="padding:20px;">Tired of creating another user name and password on every web site? Use your existing Twitter, Facebook, Google, Yahoo, GitHub, or LinkedIn to log in. Or create a traditional username and password, too.</p>
+                <p class="lead" style="padding:20px;">Tired of creating another user name and password on every web site? Use your existing Twitter, Facebook, Google, GitHub, or LinkedIn to log in.</p>
             </div>
             <div class="col-sm-4">
                 <div class="row boxFeature">
-                    <a href="{% url 'auth_login' %}"><img src="{{ STATIC_URL }}img/loginpic2.jpg" alt="Simple note Login" class="img-thumbnail"/></a>
+                    <a href="{% url 'auth_login' %}"><img src="{% static 'img/loginpic2.jpg' %}" alt="Simple note Login" class="img-thumbnail"/></a>
                 </div>
             </div> 
         </div>
@@ -129,7 +130,7 @@ span.iconBig {
 
 {% endblock %}
 {% block javascripts %}
-<script src="{{ STATIC_URL }}flexslider/jquery.flexslider-min.js"></script>
+<script src="{% static 'flexslider/jquery.flexslider-min.js' %}"></script>
 <script type="text/javascript">
 $(document).ready(function() {   
 	if($('#flexHome').length){

@@ -37,8 +37,8 @@ Attacklab.wmdBase = function(){
 	
 	// The text that appears on the upper part of the dialog box when
 	// entering links.
-	var imageDialogText = "<p style='margin-top: 0px'><b>Enter the image URL.</b></p><p>You can also add a title, which will be displayed as a tool tip.</p><p>Example:<br />http://simplenote.in/static/img/main-logo.png   \"Optional title\"</p>";
-	var linkDialogText = "<p style='margin-top: 0px'><b>Enter the web address.</b></p><p>You can also add a title, which will be displayed as a tool tip.</p><p>Example:<br />http://simplenote.in/  \"Optional title\"</p>";
+	var imageDialogText = "<p style='margin-top: 0px'><b>Enter the image URL.</b></p><p>You can also add a title, which will be displayed as a tool tip.</p><p>Example:<br />http://flipnotes.net/static/img/main-logo.png   \"Optional title\"</p>";
+	var linkDialogText = "<p style='margin-top: 0px'><b>Enter the web address.</b></p><p>You can also add a title, which will be displayed as a tool tip.</p><p>Example:<br />http://flipnotes.net/  \"Optional title\"</p>";
 	
 	// The default text that appears in the dialog input box when entering
 	// links.

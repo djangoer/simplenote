@@ -16,6 +16,7 @@ class GMapLocationForm(ModelForm):
         self.helper['address'].wrap(Field, template="userprofile/glocation.html")
     class Meta:
         model=GMapLocation
+        fields = '__all__'
 
 
 class ProfileForm(ModelForm):    

@@ -1,14 +1,16 @@
+"""
+WSGI config for notes project.
+
+It exposes the WSGI callable as a module-level variable named ``application``.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/3.0/howto/deployment/wsgi/
+"""
+
 import os
-import sys
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'notes.settings'
-
-
-virtenv =os.path.join(os.environ['HOME'],'webapps','notes','nenv','bin','activate_this.py')
-try:
-    execfile(virtenv, dict(__file__=virtenv))
-except IOError:
-    pass
 from django.core.wsgi import get_wsgi_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'notes.settings')
 
 application = get_wsgi_application()

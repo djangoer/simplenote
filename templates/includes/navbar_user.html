@@ -5,6 +5,7 @@
 {% url 'user_profile' as settings %}
 {% url 'auth_login' as login %}
 {% url 'tags' as urltags %}
+{% load static %}
 {% load note_extras %}
 <header id="mainHeader" class="navbar-fixed-top" role="banner">
   <div class="container">
@@ -17,7 +18,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{% url 'documentation' %}"><img src="{{ STATIC_URL }}img/main-logo.png" alt="Simple note logo"/></a> 
+        <a class="navbar-brand" href="{% url 'documentation' %}"><img src="{% static 'img/main-logo.png' %}" alt="Simple note logo"/></a> 
        <!-- <a class="navbar-brand" href="{% url 'home' %}"><i class="glyphicon glyphicon-home"></i> Home</a>-->
       </div>
       <div class="collapse navbar-collapse navbar-ex1-collapse" id="scrollTarget">
@@ -57,12 +58,10 @@
         -->
         {% else %}
         <li{% if request.path == login %} class="active"{% endif %}>
-            <a href="{{login}}"><i class="glyphicon glyphicon-log-in"></i> Login</a>
+            <a href="{{login}}"><i class="glyphicon glyphicon-log-in"></i> Signin / Signup</a>
         </li>
 
-        <li{% if request.path == signup %} class="active"{% endif %}>
-            <a href="#"><i class="glyphicon glyphicon-plus-sign"></i> Sign Up</a> 
-        </li>
+        
         {% endif %}            
         </ul>
 

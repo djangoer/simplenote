@@ -6,11 +6,14 @@ from userprofile.forms import ProfilePictureForm,GMapLocationForm,ProfileForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import HttpResponseRedirect
 import os
 from django.views.generic.base import View
 from django.contrib import messages
+
+def social_login(request):
+	return render(request,'userprofile/login.html')
 
 def profile(request):
 
@@ -78,7 +81,7 @@ class profileUpdate(View):
 		return render(request,'userprofile/updateprofile.html',d)
 
 	def post(self,request):
-		print request.POST['dob']
+		print(request.POST['dob'])
 		form1=ProfileForm(request.POST)
 		form2=GMapLocationForm(request.POST)
 		if form1.is_valid() and form2.is_valid():
