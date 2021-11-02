@@ -1,8 +1,6 @@
 # simplenote
 simplenote webpage
 
-> this comment is added for the purpose for an entry in the event of hacktoberfest
-
 ## installation
 
     # create and activate virtual env
@@ -11,4 +9,7 @@ simplenote webpage
     # install requirements
     pip install -r requirements.txt
     ./manage.migrate
+    # create an admin user
+    ./manage.py createsuperuser
     ./manage.runserver
+    
